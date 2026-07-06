@@ -1,0 +1,32 @@
+name: React CI Pipeline
+
+# Trigger this workflow every time code is pushed to the 'main' branch
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest # The cloud machine operating system
+
+    steps:
+      # Step 1: Clone your repository onto the cloud machine
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js on the cloud machine
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm" # Speeds up future runs
+
+      # Step 3: Clean install your project dependencies
+      - name: Install Project Dependencies
+        run: npm ci
+
+      # Step 4: Compile the React application into a production bundle
+      - name: Build Production Application
+        run: npm run build
