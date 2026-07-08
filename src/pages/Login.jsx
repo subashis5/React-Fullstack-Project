@@ -8,10 +8,10 @@ const Login = () => {
       {/* Background Blurs */}
       <div className="absolute w-80 h-80  blur-[120px] rounded-full -top-20 -left-20"></div>
 
-      <div className="absolute w-80 h-80 bg-purple-500/20 blur-[120px] rounded-full bottom-0 right-0"></div>
+      <div className="absolute w-80 h-80 bg-purple-500/20 blur-[120px] rounded-full bottom-0 right-0 "></div>
 
       {/* Login Container */}
-      <div className="flex justify-center items-center min-h-screen px-5">
+      <div className="flex justify-center items-center min-h-screen px-5 mt-20 ">
 
         <div className="w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 rounded-[35px] p-10 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
 

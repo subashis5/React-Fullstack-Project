@@ -51,7 +51,7 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="min-h-screen relative  text-white py-20 px-6"
+      className="min-h-screen relative  text-white py-20 px-6 mt-10"
     >
       <div className="max-w-7xl mx-auto">
         {/* Heading */}

@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const Layout = () => {
   return (
@@ -19,6 +20,9 @@ const Layout = () => {
 
       <main className="relative z-10">
         <Outlet />
+        <ToastContainer style={{
+          top:"17%"
+        }}/>
       </main>
 
     </div>

@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <header className="w-full flex justify-center pt-8">
-      <nav className="w-[92%] max-w-6xl h-20 bg-[#121212] rounded-full shadow-2xl border border-neutral-800 px-4 flex items-center justify-between">
+      <nav className="w-[92%] max-w-6xl h-20 bg-[#121212] rounded-full shadow-2xl border border-neutral-800 px-4 flex items-center justify-between fixed top-8 z-50  ">
         {/* Logo */}
         <div className="flex items-center gap-3">
           <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg cursor-pointer hover:rotate-12 transition duration-300">
@@ -59,7 +59,7 @@ const Navbar = () => {
           </Link>
 
           <button className="group relative flex items-center gap-2 px-7 py-3 rounded-full bg-white text-black font-semibold overflow-hidden transition-all duration-300 ease-out shadow-lg hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] hover:scale-105 active:scale-95">
-            <span className="relative z-10">Get Started</span>
+             <Link to={"./dashboard"} className="relative z-10">Get Started</Link>
           </button>
         </div>
       </nav>
