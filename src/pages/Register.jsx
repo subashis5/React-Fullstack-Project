@@ -18,25 +18,83 @@ const Register = () => {
     confirmpassword:""
 
   })
+  const[error,setError] = useState({})
+
+const validateForm = ()=>{
+  const {fullname,username,age,mobile,email,profileurl,dob,gender,courses,password,confirmpassword}=register
+  const err = {}
+  if(!fullname){
+    err.fullname="Fullname is required!"
+  }
+  if(!username){
+    err.username="Username is required!"
+  }
+  if(!age){
+    err.age = "Age is required!"
+  }
+    if(!mobile){
+    err.mobile = "Mobile is required!"
+  }
+      if(!email){
+    err.email = "Email is required!"
+  }
+      if(!dob){
+    err.dob = "DOB is required!"
+  }
+    if(!profileurl){
+    err.profileurl = "Profile url is required!"
+  }
+    if(!gender){
+    err.gender = "Gender is required!"
+  }
+    if(!courses){
+    err.courses = "Course is required!"
+  }
+    if(!password){
+    err.password = "Password is required!"
+  }
+    if(!confirmpassword){
+    err.confirmpassword = "Confirm password is required!"
+  } else if(password != confirmpassword){
+    err.confirmpassword="Password do not match"
+  }
+
+  if(Object.keys(err).length>0){
+    setError(err)
+    return false;
+  }
+
+  setError({})
+  return true;
+}
+
   const handleSubmit =async (e)=>{
-     
 e.preventDefault()
 console.log(register)
-
-try{
+const validationResult = validateForm()
+if(validationResult){
+  console.log("Form Submitted successfully")
+  try{
 const result = await axios.post("http://localhost:3000/users",register);
 if(result.status === 201){
   toast.success("Registration successfully done ✅",{position:"top-center"})
 }
 }
 catch (error){
-toast.error("Failed to Register 😕")
+toast.error(error.response?.data?.message || "Registration failed");
 console.log(error)
 }
+} else{
+  console.log("Some error is there ")
+}
+
+
+
   }
   const handleInput = (e)=>{
     const{name,value} = e.target;
 setRegister({...register,[name]:value})
+setError({...error,[name]:""})
   }
 
   return (
@@ -47,7 +105,7 @@ setRegister({...register,[name]:value})
 
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/20 blur-[140px] rounded-full -z-10 "></div>
 
-      <div className="w-full max-w-lg rounded-[36px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_20px_70px_rgba(0,0,0,0.5)] p-10 mt-10">
+      <div className="w-full max-w-2xl rounded-[36px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_20px_70px_rgba(0,0,0,0.5)] p-10 mt-3">
 
         {/* Logo */}
         <div className="flex justify-center mb-6">
@@ -57,7 +115,7 @@ setRegister({...register,[name]:value})
         </div>
 
         {/* Heading */}
-        <h1 className="text-white text-4xl font-bold text-center">
+        <h1 className="text-white text-4xl font-bold text-center md:col-span-2">
           Create Account
         </h1>
 
@@ -65,7 +123,7 @@ setRegister({...register,[name]:value})
           Join us and start your journey today.
         </p>
 
-      <form className="mt-10 space-y-6" onSubmit={handleSubmit}>
+      <form className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5" onSubmit={handleSubmit}>
 
   {/* Full Name */}
   <div>
@@ -78,6 +136,9 @@ setRegister({...register,[name]:value})
       value={register.fullname}
       onChange={handleInput}
     />
+    {
+      error.fullname && <p className="text-red-600 mt-1 pt-1">{error.fullname}</p>
+    }
   </div>
 
   {/* Username */}
@@ -91,6 +152,9 @@ setRegister({...register,[name]:value})
       value={register.username}
       onChange={handleInput}
     />
+        {
+      error.username && <p className="text-red-600 mt-1 pt-1">{error.username}</p>
+    }
   </div>
 
   {/* Age */}
@@ -104,9 +168,12 @@ setRegister({...register,[name]:value})
       value={register.age}
       onChange={handleInput}
     />
+        {
+      error.age && <p className="text-red-600 mt-1 pt-1">{error.age}</p>
+    }
   </div>
 
-  {/* Mobile */}
+  {/* DOB */}
   <div>
     <label className="text-gray-300 text-sm">Mobile Number</label>
     <input
@@ -117,6 +184,9 @@ setRegister({...register,[name]:value})
       value={register.mobile}
       onChange={handleInput}
     />
+        {
+      error.mobile && <p className="text-red-600 mt-1 pt-1">{error.mobile}</p>
+    }
   </div>
 
   {/* Email */}
@@ -130,6 +200,9 @@ setRegister({...register,[name]:value})
       value={register.email}
       onChange={handleInput}
     />
+        {
+      error.email && <p className="text-red-600 mt-1 pt-1">{error.email}</p>
+    }
   </div>
 
   {/* Profile URL */}
@@ -143,6 +216,9 @@ setRegister({...register,[name]:value})
       value={register.profileurl}
       onChange={handleInput}
     />
+        {
+      error.profileurl && <p className="text-red-600 mt-1 pt-1">{error.profileurl}</p>
+    }
   </div>
 
   {/* Date of Birth */}
@@ -155,6 +231,9 @@ setRegister({...register,[name]:value})
       value={register.dob}
       onChange={handleInput}
     />
+        {
+      error.dob && <p className="text-red-600 mt-1 pt-1">{error.dob}</p>
+    }
   </div>
 
   {/* Gender */}
@@ -163,20 +242,23 @@ setRegister({...register,[name]:value})
 
     <div className="flex gap-6 text-gray-300">
       <label className="flex items-center gap-2 cursor-pointer">
-        <input type="radio" name="gender" className="accent-white"  value="Male" onChange={handleInput} />
+        <input type="radio" name="gender" className="accent-white"  value="Male" onChange={handleInput} checked={register.gender==="Male"} />
         Male
       </label>
 
       <label className="flex items-center gap-2 cursor-pointer">
-        <input type="radio" name="gender" className="accent-white" value="Female" onChange={handleInput}  />
+        <input type="radio" name="gender" className="accent-white" value="Female" onChange={handleInput}  checked={register.gender==="Female"} />
         Female
       </label>
 
       <label className="flex items-center gap-2 cursor-pointer">
-        <input type="radio" name="gender" className="accent-white" value="Other" onChange={handleInput}  />
+        <input type="radio" name="gender" className="accent-white" value="Other" onChange={handleInput} checked={register.gender==="Other"}  />
         Other
       </label>
     </div>
+        {
+      error.gender && <p className="text-red-600 mt-1 pt-1">{error.gender}</p>
+    }
   </div>
 
   {/* Course */}
@@ -197,6 +279,9 @@ setRegister({...register,[name]:value})
       <option>MBA</option>
       <option>M.Sc</option>
     </select>
+        {
+      error.courses && <p className="text-red-600 mt-1 pt-1">{error.courses}</p>
+    }
   </div>
 
   {/* Password */}
@@ -210,6 +295,9 @@ setRegister({...register,[name]:value})
       value={register.password}
       onChange={handleInput}
     />
+        {
+      error.password && <p className="text-red-600 mt-1 pt-1">{error.password}</p>
+    }
   </div>
 
   {/* Confirm Password */}
@@ -223,6 +311,9 @@ setRegister({...register,[name]:value})
       value={register.confirmpassword}
       onChange={handleInput}
     />
+        {
+      error.confirmpassword && <p className="text-red-600 mt-1 pt-1">{error.confirmpassword}</p>
+    }
   </div>
 
   {/* Terms */}
@@ -242,7 +333,7 @@ setRegister({...register,[name]:value})
   {/* Submit Button */}
   <button
     type="submit"
-    className="w-full h-14 rounded-2xl bg-white text-black font-semibold text-lg hover:scale-[1.02] transition duration-300 shadow-lg"
+    className="w-full h-14 rounded-2xl bg-white text-black font-semibold text-lg hover:scale-[1.02] transition duration-300 shadow-lg md:col-span-2"
   >
     Create Account
   </button>
@@ -250,7 +341,7 @@ setRegister({...register,[name]:value})
 </form>
 
         {/* Footer */}
-        <p className="text-center text-gray-400 mt-8">
+        <p className="text-center text-gray-400 mt-8 md:col-span-2">
           Already have an account?
           <span className="text-white ml-2 cursor-pointer hover:underline">
             <Link to={"/login"}> Login </Link>
